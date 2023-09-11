@@ -150,15 +150,11 @@ relevant ISE environment
 ~~ Example Use ~~
 
 export $USERNAME = "ProdUser"
+
 export $PASSWORD = "ProdPass"  
-cd /[install_path]
-source venv/bin/activate
-python /src/SGTPolicyCheck Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
- 
-cd /[install_path]
-source venv/bin/activate
-python /src/SGTPolicyCheck Dev -h1 R123456.mayo.edu -h2 R654321.mayo.edu
 
 cd /[install_path]
+
 source venv/bin/activate
-python /src/SGTPolicyCheck Dev -i1 10.249.37.229 -i2 10.249.21.40
+
+python /src/SGTPolicyCheck Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
