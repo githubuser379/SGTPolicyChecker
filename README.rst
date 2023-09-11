@@ -1,4 +1,6 @@
+~~~~~~~~~~~~~~~~
 ~~~ Overview ~~~
+~~~~~~~~~~~~~~~~
 
 The SGTPolicyCheck python package allows a user to do a live check on two authenticated hosts on an enterprise network 
 to determine whether a Cisco TrustSec policy is restricting access between them.
@@ -72,8 +74,9 @@ User1@R123456 src % ls
 README.rst              SGTPolicyCheck          requirements.txt
 
 
-
+~~~~~~~~~~~~~~~~~~~~
 ~~~ Requirements ~~~
+~~~~~~~~~~~~~~~~~~~~
 
 The python version used to develop and test was python 3.9.6. It is recommended to use this version. Also,before using 
 the package, be sure to install the packages specified in the requirements.txt file with the following terminal command:
@@ -92,7 +95,9 @@ https://pip.pypa.io/en/stable/installation/
 
 You can also try re-installing python 3.9.6.
 
+~~~~~~~~~~~~~~~~~~~
 ~~~ Package Use ~~~
+~~~~~~~~~~~~~~~~~~~
 
 A user or front-end application makes use of the package by issuing some variation of the following command:
 
@@ -104,8 +109,9 @@ python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --hos
 
 python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddr1 [ipaddr] --host1 [hostname] --apiusername [user] --apipassword [pass]
 
-
-~~ Host Inputs ~~
+~~~~~~~~~~~~~~~~~~~
+~~~ Host Inputs ~~~
+~~~~~~~~~~~~~~~~~~~
 
 The user/application backend can provide any two hosts, either by hostname or ip address, using any combination of the below 
 parameters: 
@@ -120,8 +126,9 @@ addresses will be used to make queries to the ISE MNT REST APIs to retrieve auth
 If the IP addresses or tags cannot be determined for both hosts (ie. Not authenticated to ISE), the program will exit and
 display an error.
 
-
-~~ ISE inputs ~~
+~~~~~~~~~~~~~~~~~~
+~~~ ISE inputs ~~~
+~~~~~~~~~~~~~~~~~~
 
 The user/application is required to provide the '--environment' parameter:
 
@@ -131,7 +138,9 @@ This parameter specifies which instances of ISE will be queried for Cisco TrustS
 has network configuration settings that can be configured in the config.py file.
 
 
-~~ Credentials ~~
+~~~~~~~~~~~~~~~~~~~
+~~~ Credentials ~~~
+~~~~~~~~~~~~~~~~~~~
 
 Credentials for the 'DEV' and 'TEST' environment have values that can be configured in the config.py file. Credentials for 
 the 'PROD' environment must be passed as command-line arguments. This makes it more difficult to 'accidentally' kick off the 
@@ -147,7 +156,9 @@ Authentication. For the package to work, the credentials provided must have ERS 
 relevant ISE environment
 
 
-~~ Example Command Use ~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ Example Command Use ~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export $USERNAME = "ProdUser"
 
@@ -157,11 +168,13 @@ cd /[install_path]
 
 source venv/bin/activate
 
-python /src/SGTPolicyCheck Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
+python /src/SGTPolicyCheck -e Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
 
 
+--------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------Script Execution Output Example----------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 
----------------------------Script Execution Output Example----------------------------------
 
 (venv) M174892@R5338433 src % python3 SGTPolicyCheck -e Dev -h1 R5181136.mayo.edu -h2 R5091351.mayo.edu
  
