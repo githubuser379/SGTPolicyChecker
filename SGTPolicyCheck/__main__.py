@@ -10,13 +10,13 @@ def main():
     ### Define and parse arguments from 'python SGTPolicyCheck' shell command
     try:
         parser = argparse.ArgumentParser()
-        parser.add_argument("-e","--environment",help="Dev,Test, or Prod Environement",required=True)
+        parser.add_argument("-e","--environment",help="Dev,Test, or Prod Environment",required=True)
         parser.add_argument("-u","--apiusername", help="Username for ISE API (via environment variable - $USERNAME)", required=False)
         parser.add_argument("-p","--apipassword", help="Password for ISE API (via environment variable - $PASSWORD)", required=False)
         parser.add_argument("-h1","--host1", help="Hostname of First Host", required=False)
         parser.add_argument("-h2","--host2", help="Hostname of Second Host", required=False)
         parser.add_argument("-i1","--ipaddr1",help="IP Address of First Host",required=False)
-        parser.add_argument("-i2","--ipaddr2",help="IP Address of First Host",required=False)
+        parser.add_argument("-i2","--ipaddr2",help="IP Address of Second Host",required=False)
         args = parser.parse_args()
     except parser.error:
         error = sys.exc_info()[0]
@@ -35,10 +35,8 @@ def main():
     ### Instantiate host objects
     """Placeholder object to hold info for Host1"""
     Host1 = authenticatedhost.AuthenticatedClient(iseenvironment)
-    Host1.setAPIconfig()
     """Placeholder object to hold info for Host2"""
     Host2 = authenticatedhost.AuthenticatedClient(iseenvironment)
-    Host2.setAPIconfig()
 
     ### Assign attributes to host objects
     Host1.hostname = args.host1
