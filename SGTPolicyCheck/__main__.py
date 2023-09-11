@@ -11,7 +11,7 @@ def main():
     try:
         parser = argparse.ArgumentParser()
         parser.add_argument("-e","--environment",help="Dev,Test, or Prod Environement",required=True)
-        parser.add_argument("-u","--apiusername", help="Username for ISE API (via environment variable - $USERNAME)", required=False, default="")
+        parser.add_argument("-u","--apiusername", help="Username for ISE API (via environment variable - $USERNAME)", required=False)
         parser.add_argument("-p","--apipassword", help="Password for ISE API (via environment variable - $PASSWORD)", required=False)
         parser.add_argument("-h1","--host1", help="Hostname of First Host", required=False)
         parser.add_argument("-h2","--host2", help="Hostname of Second Host", required=False)
