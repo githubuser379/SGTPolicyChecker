@@ -9,8 +9,6 @@ class TrustSecMatrix:
     def __init__(self,environment):
         self.totalcells = int()
         self.matrixcells = []
-        self.nextcelllocation = {"rel":"","href":"","type":""}
-        self.sgttable = {}
         self.environment = environment
         self.envsettings = ""
         self.defaultrule = "Permit IP"

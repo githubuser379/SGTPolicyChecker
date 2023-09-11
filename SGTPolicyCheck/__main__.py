@@ -72,8 +72,9 @@ def main():
             Host2.ipaddress = socket.gethostbyname(Host2.hostname)
             print("Host2 Hostname: " + Host2.hostname)
             print("Host2 IP: " + Host2.ipaddress)
-    except Exception:
+    except Exception as e:
         print("Could not resolve hostnames")
+        print(e)
         sys.exit()
     
     ### Get authentication session information from ISE MNT node API (including tag value) for both hosts 
@@ -84,8 +85,9 @@ def main():
         print("Host1 Mac Address: " + Host1.macaddress)
         print("Host1 AuthzProfile: " + Host1.authzprofile)
         print("Host1 Tag: " + Host1.securitygrouptag)
-    except Exception:
+    except Exception as e:
         print("Could not retrieve Host1 tag from ISE MNT node")
+        print(e)
         sys.exit()
 
     try:
@@ -94,8 +96,9 @@ def main():
         print("Host2 Mac Address: " + Host2.macaddress)
         print("Host2 AuthzProfile: " + Host2.authzprofile)
         print("Host2 Tag: " + Host2.securitygrouptag)
-    except Exception:
+    except Exception as e:
         print("Could not retrieve Host2 tag from ISE MNT node")
+        print(e)
         sys.exit()
 
     ### Setup ISE Matrix Cell Objects to store information about the revelant cells retrieced from the ISE API
@@ -115,6 +118,7 @@ def main():
         else:
             pass
     except Exception as e:
+        print("Could not retrieve cellID from ISE ERS API node for SRC->DST cell ")
         print(e)
 
     try:
@@ -129,6 +133,7 @@ def main():
         else:
             pass
     except Exception as e:
+        print("Could not retrieve cellID from ISE ERS API node for DST->SRC cell")
         print(e)
 
     ### Get SGACL IDs for SGACLs configured in identified TrustSec Matrix Cells
@@ -141,12 +146,11 @@ def main():
         else:
             SrcTagtoDstTagCell = SrcTagtoDstTagCell.getCellSGACLIDs(apiusername,apipassword) 
     except Exception as e:
-        print(e)
         print("Could not retrieve SRC->DST SGACL IDs from ISE ERS API") 
-
+        print(e)
     try:
         if DstTagtoSrcTagCell.totalcells == 0:
-            print("[Host2 -> Host1] ~~")
+            print("[Host2 -> Host1]")
             print("No SGACLs are configured at cell intersection of " + Host2.securitygrouptag + "->" + Host1.securitygrouptag)
             print("No SGACL IDs to retrieve. Default matrix policy will apply \n")
         else:
