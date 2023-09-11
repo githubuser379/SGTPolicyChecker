@@ -7,17 +7,17 @@ to determine whether a Cisco TrustSec policy is restricting access between them.
 
 The following logic is executed when the __main__.py script is run:
 
-- Prompt the user for information about two hosts of interest
+- Parses user provided information about two hosts of interest
 
-- Prompt the user for information about the ISE environment the script should query
+- Parses user provided information about the ISE environment the script should query
 
-- Checks the config for the appropriate settings specified by the user
+- Checks and intializes the config settings for the environment specified by the user
 
 - Resolves hostnames (if hostnames, not IP addresses, provided by user)
 
 - Queries the ISE MNT API for session information using the IP Address of each host
 
-- Parses the ISE session information to determine the tag value of each host
+- Parses the ISE MNT API session information to determine the tag value of each host
 
 - Queries the ISE ERS API to idenitfy the TrustSec Matrix Cell which contains the policy for the idenitified tags
 
@@ -27,7 +27,10 @@ The following logic is executed when the __main__.py script is run:
 
 - Summarizes the segmentation policy between the two hosts of interest
 
+
+~~~~~~~~~~~~~~~~~~
 ~~ Installation ~~
+~~~~~~~~~~~~~~~~~~
 
 Install python 3.9.6 and add python to the system path:
 
@@ -124,7 +127,8 @@ If given a hostname, the SGTPolicyCheck package will attempt to resolve the host
 addresses will be used to make queries to the ISE MNT REST APIs to retrieve authentication session information. 
 
 If the IP addresses or tags cannot be determined for both hosts (ie. Not authenticated to ISE), the program will exit and
-display an error.
+display an error. If IP addresses and tags can be determined, the remaining API queries will continue and whatever policy
+information can be retrieved from subsequent API calls will still be displayed to the user.
 
 ~~~~~~~~~~~~~~~~~~
 ~~~ ISE inputs ~~~
@@ -137,6 +141,8 @@ The user/application is required to provide the '--environment' parameter:
 This parameter specifies which instances of ISE will be queried for Cisco TrustSec policy information. Each ISE environment 
 has network configuration settings that can be configured in the config.py file.
 
+If a non-acceptable value is provided by the user (not 'Dev','Test',or 'Prod') the program will remind the user of the
+acceptable values and the program will then exit.
 
 ~~~~~~~~~~~~~~~~~~~
 ~~~ Credentials ~~~
@@ -154,6 +160,9 @@ To provide credentials as command-line arguments, the following parameters are a
 The --apiusername and --apipassword arguments are the credentials that will be passed to the ISE API for HTTPBasic 
 Authentication. For the package to work, the credentials provided must have ERS Admin and MNT Admin permissions in the 
 relevant ISE environment
+
+If the credentials are invalid, the ISE server will respond with a HTTP 401 error and the program will throw and exception
+and exit once the HTTP response is received back from ISE.
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
