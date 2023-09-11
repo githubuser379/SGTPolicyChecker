@@ -22,7 +22,7 @@ class DevEnvironmentSettings(GlobalSettings):
         self.DevPass = "DevPass"
         # Example cmd session:
         #   cd /src
-        #   python SGTPolicyCheck Test DevUser TestPass R123456.mayo.edu R654321.mayo.edu
+        #   python SGTPolicyCheck -e Test -u DevUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
     
 class TestEnvironmentSettings(GlobalSettings):
     def __init__(self):
@@ -38,7 +38,7 @@ class TestEnvironmentSettings(GlobalSettings):
         self.TestPass = "TestPass"
         # Example cmd session:
         #   cd /src
-        #   python SGTPolicyCheck Test TestUser TestPass R123456.mayo.edu R654321.mayo.edu
+        #   python SGTPolicyCheck -e Test -u TestUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
 
 class ProdEnvironmentSettings(GlobalSettings):
     def __init__(self):
@@ -56,4 +56,4 @@ class ProdEnvironmentSettings(GlobalSettings):
         #   export $USERNAME = "ProdUser"
         #   export $PASSWORD = "ProdPass"  
         #   cd /src
-        #   python SGTPolicyCheck Prod $USERNAME $PASSWORD R123456.mayo.edu R654321.mayo.edu
+        #   python SGTPolicyCheck -e Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
