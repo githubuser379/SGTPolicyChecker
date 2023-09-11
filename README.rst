@@ -147,7 +147,7 @@ Authentication. For the package to work, the credentials provided must have ERS 
 relevant ISE environment
 
 
-~~ Example Use ~~
+~~ Example Command Use ~~
 
 export $USERNAME = "ProdUser"
 
@@ -158,3 +158,84 @@ cd /[install_path]
 source venv/bin/activate
 
 python /src/SGTPolicyCheck Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
+
+
+
+---------------------------Script Execution Output Example----------------------------------
+
+(venv) M174892@R5338433 src % python3 SGTPolicyCheck -e Dev -h1 R5181136.mayo.edu -h2 R5091351.mayo.edu
+ 
+~~ Resolving provided hostnames ~~
+
+Host1 Hostname: R5181136.mayo.edu
+
+Host1 IP: 10.249.37.229
+
+Host2 Hostname: R5091351.mayo.edu
+
+Host2 IP: 10.249.21.40
+ 
+
+~~ Retrieving authentication session information ~~
+
+Host1 Mac Address: B0:0C:D1:70:9B:DE
+
+Host1 AuthzProfile: Mayo_Allow_Reauth
+
+Host1 Tag: ADM_WKS_MAN
+
+Host2 Mac Address: EC:8E:B5:70:A2:39
+
+Host2 AuthzProfile: Mayo_Allow_Reauth
+
+Host2 Tag: ADM
+ 
+
+~~ Host1->Host2 Cell info ~~
+
+ADM_WKS_MAN -> ADM
+
+SRC-DST Cell name: None
+
+Cell ID: None
+
+Is Empty Cell? True
+ 
+~~ Host2 -> Host1 Cell info ~~
+
+ADM -> ADM_WKS_MAN
+
+DST-SRC Cell name: None
+
+Cell ID: None
+
+Is Empty Cell? True
+ 
+
+~~ Get SGACLids for SGACLS configured in identified TrustSec Matrix Cells ~~
+
+[Host1 -> Host2]
+
+No SGACLs are configured at cell intersection of ADM_WKS_MAN->ADM
+
+No SGACL IDs to retrieve. Default matrix policy will apply
+
+
+[Host2 -> Host1] ~~
+
+No SGACLs are configured at cell intersection of ADM->ADM_WKS_MAN
+
+No SGACL IDs to retrieve. Default matrix policy will apply
+ 
+
+~~ Segmentation Policy Results ~~
+
+The following segmentation policy is in place for Host1 -> Host2:
+ 
+Permit IP (Default Policy)
+ 
+The following segmentation policy is in place for Host2 -> Host1:
+ 
+Permit IP (Default Policy)
+ 
+(venv) M174892@R5338433 src %
