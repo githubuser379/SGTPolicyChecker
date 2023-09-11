@@ -1,20 +1,32 @@
-~~~Overview~~~
+~~~ Overview ~~~
+
 The SGTPolicyCheck python package allows a user to do a live check on two authenticated hosts on an enterprise network 
 to determine whether a Cisco TrustSec policy is restricting access between them.
 
 The following logic is executed when the __main__.py script is run:
+
 - Prompt the user for information about two hosts of interest
+
 - Prompt the user for information about the ISE environment the script should query
+
 - Checks the config for the appropriate settings specified by the user
+
 - Resolves hostnames (if hostnames, not IP addresses, provided by user)
+
 - Queries the ISE MNT API for session information using the IP Address of each host
+
 - Parses the ISE session information to determine the tag value of each host
+
 - Queries the ISE ERS API to idenitfy the TrustSec Matrix Cell which contains the policy for the idenitified tags
+
 - Queries the ISE ERS API to idenitfy the TrustSec Matrix SGACLS contained in the identified cells
+
 - Queries the ISE ERS API to idenitfy the specific content of SGACLS contained in the identified cells
+
 - Summarizes the segmentation policy between the two hosts of interest
 
 ~~ Installation ~~
+
 Install python 3.9.6 and add python to the system path:
 
     *Windows
@@ -32,22 +44,37 @@ If git is installed on your computer, you can alternatively clone the repo from
 git@github.com:githubuser379/SGTPolicyChecker.git:
 
 User1@R123456 ~ % pwd
+
 /Users/User1
+
 User1@R123456 ~ % mkdir PycharmProjects
+
 User1@R123456 ~ % ls
+
 PycharmProjects         
+
 User1@R123456 ~ % cd PycharmProjects
+
 User1@R123456 PycharmProjects % init git
+
 User1@R123456 PycharmProjects % git clone git@github.com:githubuser379/SGTPolicyChecker.git
+
 User1@R123456 PycharmProjects % ls
+
 ISEAPI
+
 User1@R123456 ~ % cd ISEAPI
+
 User1@R123456 ISEAPI % cd src
+
 User1@R123456 src % ls
+
 README.rst              SGTPolicyCheck          requirements.txt
 
 
-~~~Requirements~~~
+
+~~~ Requirements ~~~
+
 The python version used to develop and test was python 3.9.6. It is recommended to use this version. Also,before using 
 the package, be sure to install the packages specified in the requirements.txt file with the following terminal command:
 
@@ -65,19 +92,26 @@ https://pip.pypa.io/en/stable/installation/
 
 You can also try re-installing python 3.9.6.
 
-~~~Package Use~~~
+~~~ Package Use ~~~
+
 A user or front-end application makes use of the package by issuing some variation of the following command:
 
 python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --host1 [hostname] --host2 [hostname] --apiusername [user] --apipassword [pass]
+
 python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddr1 [ipaddr] --ipaddr2 [ipaddr] --apiusername [user] --apipassword [pass]
+
 python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --host1 [hostname] --ipaddr1 [ipaddr] --apiusername [user] --apipassword [pass]
+
 python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddr1 [ipaddr] --host1 [hostname] --apiusername [user] --apipassword [pass]
 
+
 ~~ Host Inputs ~~
+
 The user/application backend can provide any two hosts, either by hostname or ip address, using any combination of the below 
 parameters: 
 
 ("-h1" or "--host1")("-h2" or "--host2")
+
 ("-i1" or "--ipaddr1")("-i2" or "--ipaddr2")
 
 If given a hostname, the SGTPolicyCheck package will attempt to resolve the hostname to an IPaddress. These client IP 
@@ -88,6 +122,7 @@ display an error.
 
 
 ~~ ISE inputs ~~
+
 The user/application is required to provide the '--environment' parameter:
 
 ("-e" or "--environment")
@@ -97,6 +132,7 @@ has network configuration settings that can be configured in the config.py file.
 
 
 ~~ Credentials ~~
+
 Credentials for the 'DEV' and 'TEST' environment have values that can be configured in the config.py file. Credentials for 
 the 'PROD' environment must be passed as command-line arguments. This makes it more difficult to 'accidentally' kick off the 
 script towards the production environment.
@@ -112,6 +148,7 @@ relevant ISE environment
 
 
 ~~ Example Use ~~
+
 export $USERNAME = "ProdUser"
 export $PASSWORD = "ProdPass"  
 cd /[install_path]
