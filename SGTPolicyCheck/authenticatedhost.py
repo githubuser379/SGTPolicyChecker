@@ -39,5 +39,8 @@ class AuthenticatedClient:
             self.securitygrouptag = APIResponseData["sessionParameters"]["cts_security_group"]
             self.authzprofile = APIResponseData["sessionParameters"]["selected_azn_profiles"]
             return self
-        except requests.exceptions.RequestException:
-            print("ISE API Call Failed")
+        except requests.exceptions.RequestException as httperror:
+            print("ISE MNT API Call Failed")
+            print(httperror)
+        except Exception as error:
+            print(error)

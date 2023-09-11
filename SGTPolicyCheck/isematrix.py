@@ -61,8 +61,11 @@ class TrustSecMatrixCell(TrustSecMatrix):
             else:
                 print("Unexpected Use Case - More than 1 ISE Matrix cell returned")
             return self
-        except Exception as e:
-            print(e)
+        except requests.exceptions.RequestException as httperror:
+            print("ISE ERS API Call Failed")
+            print(httperror)
+        except Exception as error:
+            print(error)
 
     def getCellSGACLIDs(self,APIUsername,APIPassword):
         try:
@@ -74,8 +77,11 @@ class TrustSecMatrixCell(TrustSecMatrix):
             self.egressMatrixCellDetails = APIResponseData['EgressMatrixCell']
             self.SGACLIDs = self.egressMatrixCellDetails['sgacls']
             return self
-        except requests.exceptions.RequestExceptions:
-            print("ISE API Call Failed")
+        except requests.exceptions.RequestException as httperror:
+            print("ISE ERS API Call Failed")
+            print(httperror)
+        except Exception as error:
+            print(error)
     
     def getSGACLbyID(self,APIUsername,APIPassword):
         try:
@@ -91,7 +97,10 @@ class TrustSecMatrixCell(TrustSecMatrix):
                 if i > 1:
                     time.sleep(1)
             return self
-        except requests.exceptions.RequestExceptions:
-            print("ISE API Call Failed")
+        except requests.exceptions.RequestException as httperror:
+            print("ISE ERS API Call Failed")
+            print(httperror)
+        except Exception as error:
+            print(error)
     
     
