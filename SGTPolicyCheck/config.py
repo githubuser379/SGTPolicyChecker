@@ -1,4 +1,4 @@
-class GlobalSettings:
+class RuntimeSettings:
     def __init__(self): 
         self.ENV_NAME = ""
         self.ERS_HOST = "PAN_IP_Address"
@@ -8,7 +8,7 @@ class GlobalSettings:
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
         self.MNT_BASE_URL = "https://" + self.MNT_HOST + ":" + self.MNT_PORT + "/ise/mnt/api"
         
-class DevEnvironmentSettings(GlobalSettings):
+class DevEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Dev"
@@ -24,7 +24,7 @@ class DevEnvironmentSettings(GlobalSettings):
         #   cd /src
         #   python SGTPolicyCheck -e Test -u DevUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
     
-class TestEnvironmentSettings(GlobalSettings):
+class TestEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Test"
@@ -40,7 +40,7 @@ class TestEnvironmentSettings(GlobalSettings):
         #   cd /src
         #   python SGTPolicyCheck -e Test -u TestUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
 
-class ProdEnvironmentSettings(GlobalSettings):
+class ProdEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Prod"
