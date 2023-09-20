@@ -1,12 +1,12 @@
 class RuntimeSettings:
     def __init__(self): 
-        self.ENV_NAME = ""
+        self.ENV_NAME = "'Prod','Test' or 'Dev'"
         self.ERS_HOST = "PAN_IP_Address"
         self.MNT_HOST = "MNT_IP_Address"
-        self.ERS_PORT = "9060"
-        self.MNT_PORT = "443"
-        self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
-        self.MNT_BASE_URL = "https://" + self.MNT_HOST + ":" + self.MNT_PORT + "/ise/mnt/api"
+        self.ERS_PORT = "ERS API Port Number"
+        self.MNT_PORT = "MNT API Port Number"
+        self.ERS_BASE_URL = "Full ERS API URL"
+        self.MNT_BASE_URL = "Full MNT API URL"
         
 class DevEnvironmentSettings(RuntimeSettings):
     def __init__(self):
