@@ -144,6 +144,173 @@ has network configuration settings that can be configured in the config.py file.
 If a non-acceptable value is provided by the user (not 'Dev','Test',or 'Prod') the program will remind the user of the
 acceptable values and the program will then exit.
 
+~~~~~~~~~~~~~~~~
+~~~ ISE APIs ~~~
+~~~~~~~~~~~~~~~~
+
+This package calls the ISE MNT API to retrieve the following information for each endpoint:
+
+- Mac Address
+
+- ISE Authorization Profile
+
+- Cisco TrustSec Security Group Tag
+
+This package calls the ISE ERS API to retrieve the following information:
+
+- Relevant TrustSec Matrix Cell ID
+
+- Relevant SGACL IDs
+
+- Relevant SGACL content
+
+The ISE MNT API documentation can be found here: 
+https://developer.cisco.com/docs/identity-services-engine/3.0/#!using-api-calls-for-session-management/detailed-session-attribute-api-calls
+
+
+The ISE ERS API documentation can be found here:
+https://developer.cisco.com/docs/identity-services-engine/3.0/#!cisco-ise-api-documentation
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ ISE MNT API Call ~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ISE MNT API calls used by this package include the following:
+- https://<ise_mnt_node>:443/ise/mnt/api/Session/EndPointIPAddress/<endpoint_ip>
+
+The ISE MNT node provides an HTTP response with a HTTP body that includes authentication session attributes wrapped inside
+ an element called 'sessionParameters':
+
+    <sessionParameters>
+
+      <passed xsi:type="xs:boolean">true</passed>
+
+      <calling_station_id>00:0C:29:95:A5:C1</calling_station_id>
+
+      <framed_ip_address>10.20.40.10</framed_ip_address>
+
+      ...
+
+      <selected_azn_profiles>wired_cwa_redirect</selected_azn_profiles>
+
+      <response_time>17</response_time>
+
+      <cts_security_group> ADM </cts_security_group>
+
+      <vlan>30</vlan>
+
+      <dacl>#ACSACL#-IP-cwa_wired-4f570619</dacl>
+
+      <endpoint_policy>WindowsXP-Workstation</endpoint_policy>
+
+    </sessionParameters>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ ISE ERS API Calls ~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Three ERS API calls are needed to collect the appropriate information about the TrustSec Matrix:
+
+- Egress Matrix Cell 'Get-All' call: https://<ise_admin_node>:9060/ers/config/egressmatrixcell 
+
+- Egress Matrix Cell 'Get-By-ID' call: https://<ise_admin_node>:9060/ers/config/egressmatrixcell/{id}
+
+- Security Group ACL 'Get-By-ID' call: https://<ise_admin_node>:9060/ers/config/sgacl/{id}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ Egress Matrix 'Get-all' Call ~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The HTTP response for the Egress Matrix 'Get-all' call is returned in JSON by default and includes the number of cells that a
+TrustSec Matrix has as well as the ids and names of the cells. The HTTP response body looks like follows:
+
+{
+
+  "SearchResult" : {
+
+    "total" : 2,
+
+    "resources" : [ {
+
+      "id" : "id1",
+
+      "name" : "name1",
+
+      "description" : "description1"
+
+    }, {
+
+      "id" : "id2",
+
+      "name" : "name2",
+
+      "description" : "description2"
+
+    } ],
+
+However, this call also supports a filter:
+Key: filter
+Value: sgtSrcName.EQ{{srcSGT}}; sgtDstName.EQ{{srcSGT}}
+
+So it can be called like follows to get a single intersection cell of two tags:
+https://<ise_admin_node>:9060/ers/config/egressmatrixcell?filter=sgtSrcName.EQ.<srcSGT>"&filter=sgtDstName.Eq.<dstSGT>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ Egress Matrix 'Get-by-id' Call ~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+The HTTP response for the Egress Matrix 'Get-BY-ID' call is returned in JSON by default and includes the cell name, srcSGTid, 
+DstSGTid, matrix cell status ('ENABLED', 'MONITOR' or 'DISABLED'), the name of the default rule, and a list of configured 
+SGACL IDs. The HTTP response body looks like follows:
+
+{
+
+  "EgressMatrixCell" : {
+
+    "sourceSgtId" : "2ebbc200-7a26-11e4-bc43-000c29ed7428",
+
+    "destinationSgtId" : "1ebbc200-7a26-11e4-bc43-000c29ed7428",
+
+    "matrixCellStatus" : "MONITOR",
+
+    "defaultRule" : "PERMIT_IP",
+
+    "sgacls" : [ "1ebbc100-7a26-11e4-bc43-000c29ed7428", "2ebbc100-7a26-11e4-bc43-000c29ed7428" ]
+
+  }
+
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ SGACL 'Get-by-id' Call ~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The HTTP response for the Security Group ACL 'Get-By-ID' call is returned in JSON by default and includes the SGACL ID,
+the SGACL name, the SGACL description, the SGACL version, and the SGACL content. The HTTP response body looks like follows:
+
+{
+
+  "Sgacl" : {
+
+    "id" : "id",
+
+    "name" : "name",
+
+    "description" : "description",
+
+    "ipVersion" : "IPV4",
+
+    "aclcontent" : "Permit IP"
+
+  }
+
+}
+
 ~~~~~~~~~~~~~~~~~~~
 ~~~ Credentials ~~~
 ~~~~~~~~~~~~~~~~~~~
