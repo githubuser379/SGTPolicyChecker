@@ -1,3 +1,4 @@
+import traceback
 import requests
 import config
 import time
@@ -29,7 +30,7 @@ class TrustSecMatrixCell(TrustSecMatrix):
     def __init__(self,environment):
         super().__init__(environment)
         self.totalcells = 1
-        self.cellID = None
+        self.cellId = None
         self.cellName = None
         self.emptycell = None
         self.egressMatrixCellDetails = {}
@@ -51,25 +52,25 @@ class TrustSecMatrixCell(TrustSecMatrix):
                 self.SGACLIDs = None
                 self.SGACLnames = None
                 self.emptycell = True
-                pass
+                return self
             elif APIResponseData['SearchResult']['total'] == 1:
                 self.cellId = APIResponseData['SearchResult']['resources'][0]['id']
                 self.cellName = str(APIResponseData['SearchResult']['resources'][0]['name'])
                 self.emptycell = False
-                print("CellID: " + self.cellID)
-                print("CellName: " + self.cellName)
+                return self
             else:
                 print("Unexpected Use Case - More than 1 ISE Matrix cell returned")
-            return self
         except requests.exceptions.RequestException as httperror:
             print("ISE ERS API Call Failed")
             print(httperror)
+            print(traceback.format_exc())
         except Exception as error:
             print(error)
+            print(traceback.format_exc())
 
-    def getCellSGACLIDs(self,APIUsername,APIPassword):
+    def getCellSGACLIDs(self,APIUsername,APIPassword,cellid):
         try:
-            getsgaclIDurl = self.envsettings.ERS_BASE_URL + "/egressmatrixcell/" + self.cellID
+            getsgaclIDurl = str(self.envsettings.ERS_BASE_URL) + "/egressmatrixcell/" + str(cellid)
             headers = {"Accept":"application/json","Content-Type":"application/json"}
             ISEAPICall = requests.get(getsgaclIDurl,auth=(APIUsername,APIPassword),headers=headers,verify=False)
             ISEAPICall.raise_for_status()
@@ -80,10 +81,12 @@ class TrustSecMatrixCell(TrustSecMatrix):
         except requests.exceptions.RequestException as httperror:
             print("ISE ERS API Call Failed")
             print(httperror)
+            print(traceback.format_exc())
         except Exception as error:
             print(error)
+            print(traceback.format_exc())
     
-    def getSGACLbyID(self,APIUsername,APIPassword):
+    def getSGACLbyID(self,APIUsername,APIPassword,SGACLIDs):
         try:
             i = len(self.SGACLIDs)
             for sgaclID in self.SGACLIDs:
@@ -92,15 +95,17 @@ class TrustSecMatrixCell(TrustSecMatrix):
                 ISEAPICall = requests.get(getSGACLdetailsurl,auth=(APIUsername,APIPassword),headers=headers,verify=False)
                 ISEAPICall.raise_for_status()
                 APIResponseData= ISEAPICall.json()
-                self.SGACLcontent.append(APIResponseData['sgacl']['aclcontent'])
-                self.SGACLnames.append(APIResponseData['sgacl']['name'])
+                self.SGACLcontent.append(APIResponseData['Sgacl']['aclcontent'])
+                self.SGACLnames.append(APIResponseData['Sgacl']['name'])
                 if i > 1:
                     time.sleep(1)
-            return self
+                return self
         except requests.exceptions.RequestException as httperror:
             print("ISE ERS API Call Failed")
             print(httperror)
+            print(traceback.format_exc())
         except Exception as error:
             print(error)
+            print(traceback.format_exc())
     
     

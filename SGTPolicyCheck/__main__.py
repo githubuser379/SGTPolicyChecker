@@ -1,3 +1,4 @@
+import traceback
 import authenticatedhost
 import isematrix
 import sys
@@ -20,6 +21,7 @@ def main():
         args = parser.parse_args()
     except parser.error:
         error = sys.exc_info()[0]
+        print(traceback.format_exc())
         print(error)
     
     ### Define global variables
@@ -73,6 +75,7 @@ def main():
     except Exception as error:
         print("Could not resolve hostnames")
         print(error)
+        print(traceback.format_exc())
         sys.exit()
     
     ### Get authentication session information from ISE MNT node API (including tag value) for both hosts 
@@ -86,6 +89,7 @@ def main():
     except Exception as error:
         print("Could not retrieve Host1 tag from ISE MNT node")
         print(error)
+        print(traceback.format_exc())
         sys.exit()
 
     try:
@@ -97,6 +101,7 @@ def main():
     except Exception as error:
         print("Could not retrieve Host2 tag from ISE MNT node")
         print(error)
+        print(traceback.format_exc())
         sys.exit()
 
     ### Setup ISE Matrix Cell Objects to store information about the revelant cells retrieced from the ISE API
@@ -118,7 +123,7 @@ def main():
     except Exception as error:
         print("Could not retrieve cellID from ISE ERS API node for SRC->DST cell ")
         print(error)
-
+        print(traceback.format_exc())
     try:
         DstTagtoSrcTagCell = isematrixcellobject2.getMatrixCellInfo(Host2.securitygrouptag,Host1.securitygrouptag,apiusername,apipassword)
         print("\n~~ Host2 -> Host1 Cell info ~~")
@@ -133,6 +138,7 @@ def main():
     except Exception as error:
         print("Could not retrieve cellID from ISE ERS API node for DST->SRC cell")
         print(error)
+        print(traceback.format_exc())
 
     ### Get SGACL IDs for SGACLs configured in identified TrustSec Matrix Cells
     try:
@@ -142,54 +148,62 @@ def main():
             print("No SGACLs are configured at cell intersection of " + Host1.securitygrouptag + "->" + Host2.securitygrouptag)
             print("No SGACL IDs to retrieve. Default matrix policy will apply \n")        
         else:
-            SrcTagtoDstTagCell = SrcTagtoDstTagCell.getCellSGACLIDs(apiusername,apipassword) 
+            SrcTagtoDstTagCell.getCellSGACLIDs(apiusername,apipassword,SrcTagtoDstTagCell.cellId)
+            print(str(SrcTagtoDstTagCell.SGACLIDs))
     except Exception as error:
         print("Could not retrieve SRC->DST SGACL IDs from ISE ERS API") 
         print(error)
+        print(traceback.format_exc())
     try:
         if DstTagtoSrcTagCell.totalcells == 0:
             print("[Host2 -> Host1]")
             print("No SGACLs are configured at cell intersection of " + Host2.securitygrouptag + "->" + Host1.securitygrouptag)
             print("No SGACL IDs to retrieve. Default matrix policy will apply \n")
         else:
-            DstTagtoSrcTagCell = DstTagtoSrcTagCell.getCellSGACLIDs(apiusername,apipassword) 
+            DstTagtoSrcTagCell.getCellSGACLIDs(apiusername,apipassword,DstTagtoSrcTagCell.cellId)
+            print(str(SrcTagtoDstTagCell.SGACLIDs) + "\n")
     except Exception as error:
+        print("Could not retrieve DST->SRC SGACL IDs from ISE ERS API")
         print(error)
-        print("Could not retrieve DST->SRC SGACL IDs from ISE ERS API") 
+        print(traceback.format_exc())
     
     ### Get SGACL Details by SGACL ID
     try:
         if SrcTagtoDstTagCell.SGACLIDs == None:
             pass
         else:
-            SrcTagtoDstTagCell = SrcTagtoDstTagCell.getSGACLbyID(apiusername,apipassword)
+            SrcTagtoDstTagCell = SrcTagtoDstTagCell.getSGACLbyID(apiusername,apipassword,SrcTagtoDstTagCell.SGACLIDs)
     except Exception as error:
         print("Could not retrieve SRC->DST SGACL content details from ISE ERS API")
         print(error)
+        print(traceback.format_exc())
 
     try:
         if DstTagtoSrcTagCell.SGACLIDs == None:
             pass
         else:
-            DstTagtoSrcTagCell = DstTagtoSrcTagCell.getSGACLbyID(apiusername,apipassword)
+            DstTagtoSrcTagCell = DstTagtoSrcTagCell.getSGACLbyID(apiusername,apipassword,DstTagtoSrcTagCell.SGACLIDs)
     except Exception as error:
         print("Could not retrieve DST->SRC SGACL content details from ISE ERS API")
         print(error)
+        print(traceback.format_exc())
 
-    print("~~ Segmentation Policy Results ~~")
+    print("~~ Segmentation Policy Results ~~ \n")
     print("The following segmentation policy is in place for Host1 -> Host2:\n")
     if SrcTagtoDstTagCell.SGACLnames == None:
         print(SrcTagtoDstTagCell.defaultrule + " (Default Policy)\n")
     else:
         for SGACL in SrcTagtoDstTagCell.SGACLnames:
-            print(SGACL.content + "\n")
+            for AccessControlEntry in SrcTagtoDstTagCell.SGACLcontent:
+                print(str(AccessControlEntry) + "\n")
     
     print("The following segmentation policy is in place for Host2 -> Host1:\n")
-    if SrcTagtoDstTagCell.SGACLnames == None:
+    if DstTagtoSrcTagCell.SGACLnames == None:
         print(DstTagtoSrcTagCell.defaultrule + " (Default Policy)\n")
     else:
         for SGACL in DstTagtoSrcTagCell.SGACLnames:
-            print(SGACL.content + "\n")
+            for AccessControlEntry in DstTagtoSrcTagCell.SGACLcontent:
+                print(str(AccessControlEntry) + "\n")
     
 if __name__ == '__main__':
     main()
