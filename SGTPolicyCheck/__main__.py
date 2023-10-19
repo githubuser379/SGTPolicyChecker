@@ -190,9 +190,9 @@ def main():
 
 
     ### Summarize the SGT Policy between hosts
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
-    print("~~~~~~~~~~~~~~~ Segmentation Policy Results ~~~~~~~~~~~~~~~ \n")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
+    print("~~~~~~~~~~~~~~~~~~ Segmentation Policy Results ~~~~~~~~~~~~~~~~~~ \n")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
     
     print("The following segmentation policy is in place for Host1 -> Host2:\n")
     if SrcTagtoDstTagCell.SGACLnames == None:
@@ -211,10 +211,11 @@ def main():
             print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
             print("SGACL name: " + str(SGACLname))
             print("SGACL content: \n")
+            ACENumber = 1
             for AccessControlEntry in SrcTagtoDstTagCell.SGACLcontent:
-                ACENumber = 1
-                print("     " + str(ACENumber) + "  |  " + str(AccessControlEntry) + "\n")
+                print("    " + str(AccessControlEntry))
                 ACENumber += 1
+            print("\n")
     
     print("The following segmentation policy is in place for Host2 -> Host1:\n")
     if DstTagtoSrcTagCell.SGACLnames == None:
@@ -234,10 +235,11 @@ def main():
             print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
             print("SGACL name: " +str(SGACLname))
             print("SGACL content: \n")
+            ACENumber = 1
             for AccessControlEntry in DstTagtoSrcTagCell.SGACLcontent:
-                ACENumber = 1
-                print("     " + str(ACENumber) + "  |  " + str(AccessControlEntry) + "\n")
+                print(f"    {AccessControlEntry}")
                 ACENumber += 1
-    
+            print('\n')
+
 if __name__ == '__main__':
     main()

@@ -22,7 +22,7 @@ class DevEnvironmentSettings(RuntimeSettings):
         self.DevPass = "DevPass"
         # Example cmd session:
         #   cd /src
-        #   python SGTPolicyCheck -e Test -u DevUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
+        #   python SGTPolicyCheck -e Dev -u DevUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
     
 class TestEnvironmentSettings(RuntimeSettings):
     def __init__(self):
