@@ -144,24 +144,29 @@ def main():
     try:
         print("~~ Get SGACLids for SGACLS configured in identified TrustSec Matrix Cells ~~")
         if SrcTagtoDstTagCell.totalcells == 0:
-            print("[Host1 -> Host2]")
+            print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
+            print("Cell ID: " + str(SrcTagtoDstTagCell.cellId))
             print("No SGACLs are configured at cell intersection of " + Host1.securitygrouptag + "->" + Host2.securitygrouptag)
             print("No SGACL IDs to retrieve. Default matrix policy will apply \n")        
         else:
             SrcTagtoDstTagCell.getCellSGACLIDs(apiusername,apipassword,SrcTagtoDstTagCell.cellId)
-            print(str(SrcTagtoDstTagCell.SGACLIDs))
+            print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
+            print("Cell ID: " + str(SrcTagtoDstTagCell.cellId))
+            print("SGACL ID List: " + str(SrcTagtoDstTagCell.SGACLIDs) + "\n")
     except Exception as error:
         print("Could not retrieve SRC->DST SGACL IDs from ISE ERS API") 
         print(error)
         print(traceback.format_exc())
     try:
         if DstTagtoSrcTagCell.totalcells == 0:
-            print("[Host2 -> Host1]")
+            print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
             print("No SGACLs are configured at cell intersection of " + Host2.securitygrouptag + "->" + Host1.securitygrouptag)
             print("No SGACL IDs to retrieve. Default matrix policy will apply \n")
         else:
             DstTagtoSrcTagCell.getCellSGACLIDs(apiusername,apipassword,DstTagtoSrcTagCell.cellId)
-            print(str(SrcTagtoDstTagCell.SGACLIDs) + "\n")
+            print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
+            print("Cell ID: " + str(DstTagtoSrcTagCell.cellId))
+            print("SGACL ID List: " + str(SrcTagtoDstTagCell.SGACLIDs) + "\n")
     except Exception as error:
         print("Could not retrieve DST->SRC SGACL IDs from ISE ERS API")
         print(error)
@@ -196,6 +201,9 @@ def main():
     
     print("The following segmentation policy is in place for Host1 -> Host2:\n")
     if SrcTagtoDstTagCell.SGACLnames == None:
+        print("Hostname1: " + str(Host1.hostname) + " -> " + "Hostname2: " + str(Host2.hostname))
+        print(str(Host1.ipaddress) + " -> " + str(Host2.ipaddress))
+        print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
         print("Host1 NAC Authz Policy: " + Host1.authzprofile)
         print("Host2 NAC Authz Policy: " + Host2.authzprofile)
         print("Host1 Tag: " + Host1.securitygrouptag)
@@ -203,41 +211,48 @@ def main():
         print("Is Empty Cell? " + str(SrcTagtoDstTagCell.emptycell) + "\n")
         print("     " + str(SrcTagtoDstTagCell.matrixdefaultrule) + " (Default Policy)\n")
     else:
+        print("Hostname1: " + str(Host1.hostname) + " -> " + "Hostname2: " + str(Host2.hostname))
+        print(str(Host1.ipaddress) + " -> " + str(Host2.ipaddress))
+        print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
         for SGACLname in SrcTagtoDstTagCell.SGACLnames:
             print("Host1 NAC Authz Policy: " + Host1.authzprofile)
             print("Host2 NAC Authz Policy: " + Host2.authzprofile)
             print("Host1 Tag: " + Host1.securitygrouptag)
             print("Host2 Tag: " + Host2.securitygrouptag)
-            print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
+            
             print("SGACL name: " + str(SGACLname))
             print("SGACL content: \n")
             ACENumber = 1
             for AccessControlEntry in SrcTagtoDstTagCell.SGACLcontent:
-                print("    " + str(AccessControlEntry))
+                print("    " + str(ACENumber) + "  |  " + str(AccessControlEntry))
                 ACENumber += 1
             print("\n")
     
     print("The following segmentation policy is in place for Host2 -> Host1:\n")
     if DstTagtoSrcTagCell.SGACLnames == None:
+        print("Hostname2: " + str(Host2.hostname) + " -> " + "Hostname1: " + str(Host1.hostname))
+        print(str(Host2.ipaddress) + " -> " + str(Host1.ipaddress))
+        print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
         print("Host2 NAC Authz Policy: " + Host2.authzprofile)
         print("Host1 NAC Authz Policy: " + Host1.authzprofile)
         print("Host2 Tag: " + Host2.securitygrouptag)
         print("Host1 Tag: " + Host1.securitygrouptag)
-        print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
         print("Is Empty Cell? " + str(DstTagtoSrcTagCell.emptycell) + "\n") 
         print("     " + str(DstTagtoSrcTagCell.matrixdefaultrule) + " (Default Policy)\n")
     else:
+        print("Hostname2: " + str(Host2.hostname) + " -> " + "Hostname1: " + str(Host1.hostname))
+        print(str(Host2.ipaddress) + " -> " + str(Host1.ipaddress))
+        print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
         for SGACLname in DstTagtoSrcTagCell.SGACLnames:
             print("Host2 NAC Authz Policy: " + Host2.authzprofile)
             print("Host1 NAC Authz Policy: " + Host1.authzprofile)
             print("Host2 Tag: " + Host2.securitygrouptag)
             print("Host1 Tag: " + Host1.securitygrouptag)
-            print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
             print("SGACL name: " +str(SGACLname))
             print("SGACL content: \n")
             ACENumber = 1
             for AccessControlEntry in DstTagtoSrcTagCell.SGACLcontent:
-                print(f"    {AccessControlEntry}")
+                print("    " + str(ACENumber) + "  |  " + str(AccessControlEntry))
                 ACENumber += 1
             print('\n')
 
