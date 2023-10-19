@@ -188,22 +188,28 @@ def main():
         print(error)
         print(traceback.format_exc())
 
+
+    ### Summarize the SGT Policy between hosts
     print("~~ Segmentation Policy Results ~~ \n")
     print("The following segmentation policy is in place for Host1 -> Host2:\n")
     if SrcTagtoDstTagCell.SGACLnames == None:
         print(SrcTagtoDstTagCell.defaultrule + " (Default Policy)\n")
     else:
-        for SGACL in SrcTagtoDstTagCell.SGACLnames:
+        for SGACLname in SrcTagtoDstTagCell.SGACLnames:
+            print(SGACLname)
             for AccessControlEntry in SrcTagtoDstTagCell.SGACLcontent:
                 print(str(AccessControlEntry) + "\n")
+            print("\n")
     
     print("The following segmentation policy is in place for Host2 -> Host1:\n")
     if DstTagtoSrcTagCell.SGACLnames == None:
         print(DstTagtoSrcTagCell.defaultrule + " (Default Policy)\n")
     else:
-        for SGACL in DstTagtoSrcTagCell.SGACLnames:
+        for SGACLname in DstTagtoSrcTagCell.SGACLnames:
+            print(SGACLname)
             for AccessControlEntry in DstTagtoSrcTagCell.SGACLcontent:
                 print(str(AccessControlEntry) + "\n")
+            print("\n")
     
 if __name__ == '__main__':
     main()
