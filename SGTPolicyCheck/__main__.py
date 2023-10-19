@@ -190,26 +190,54 @@ def main():
 
 
     ### Summarize the SGT Policy between hosts
-    print("~~ Segmentation Policy Results ~~ \n")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
+    print("~~~~~~~~~~~~~~~ Segmentation Policy Results ~~~~~~~~~~~~~~~ \n")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
+    
     print("The following segmentation policy is in place for Host1 -> Host2:\n")
     if SrcTagtoDstTagCell.SGACLnames == None:
-        print(SrcTagtoDstTagCell.defaultrule + " (Default Policy)\n")
+        print("Host1 NAC Authz Policy: " + Host1.authzprofile)
+        print("Host2 NAC Authz Policy: " + Host2.authzprofile)
+        print("Host1 Tag: " + Host1.securitygrouptag)
+        print("Host2 Tag: " + Host2.securitygrouptag)
+        print("Is Empty Cell? " + str(SrcTagtoDstTagCell.emptycell) + "\n")
+        print("     " + str(SrcTagtoDstTagCell.matrixdefaultrule) + " (Default Policy)\n")
     else:
         for SGACLname in SrcTagtoDstTagCell.SGACLnames:
-            print(SGACLname)
+            print("Host1 NAC Authz Policy: " + Host1.authzprofile)
+            print("Host2 NAC Authz Policy: " + Host2.authzprofile)
+            print("Host1 Tag: " + Host1.securitygrouptag)
+            print("Host2 Tag: " + Host2.securitygrouptag)
+            print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
+            print("SGACL name: " + str(SGACLname))
+            print("SGACL content: \n")
             for AccessControlEntry in SrcTagtoDstTagCell.SGACLcontent:
-                print(str(AccessControlEntry) + "\n")
-            print("\n")
+                ACENumber = 1
+                print("     " + str(ACENumber) + "  |  " + str(AccessControlEntry) + "\n")
+                ACENumber += 1
     
     print("The following segmentation policy is in place for Host2 -> Host1:\n")
     if DstTagtoSrcTagCell.SGACLnames == None:
-        print(DstTagtoSrcTagCell.defaultrule + " (Default Policy)\n")
+        print("Host2 NAC Authz Policy: " + Host2.authzprofile)
+        print("Host1 NAC Authz Policy: " + Host1.authzprofile)
+        print("Host2 Tag: " + Host2.securitygrouptag)
+        print("Host1 Tag: " + Host1.securitygrouptag)
+        print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
+        print("Is Empty Cell? " + str(DstTagtoSrcTagCell.emptycell) + "\n") 
+        print("     " + str(DstTagtoSrcTagCell.matrixdefaultrule) + " (Default Policy)\n")
     else:
         for SGACLname in DstTagtoSrcTagCell.SGACLnames:
-            print(SGACLname)
+            print("Host2 NAC Authz Policy: " + Host2.authzprofile)
+            print("Host1 NAC Authz Policy: " + Host1.authzprofile)
+            print("Host2 Tag: " + Host2.securitygrouptag)
+            print("Host1 Tag: " + Host1.securitygrouptag)
+            print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
+            print("SGACL name: " +str(SGACLname))
+            print("SGACL content: \n")
             for AccessControlEntry in DstTagtoSrcTagCell.SGACLcontent:
-                print(str(AccessControlEntry) + "\n")
-            print("\n")
+                ACENumber = 1
+                print("     " + str(ACENumber) + "  |  " + str(AccessControlEntry) + "\n")
+                ACENumber += 1
     
 if __name__ == '__main__':
     main()

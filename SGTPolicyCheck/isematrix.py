@@ -12,7 +12,7 @@ class TrustSecMatrix:
         self.matrixcells = []
         self.environment = environment
         self.envsettings = ""
-        self.defaultrule = "Permit IP"
+        self.matrixdefaultrule = "Permit IP"
         self.setAPIconfig()
     
     def setAPIconfig(self):
