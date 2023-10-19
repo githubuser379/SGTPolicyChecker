@@ -1,3 +1,4 @@
+import traceback
 import requests
 import config
 import xmltodict
@@ -42,5 +43,7 @@ class AuthenticatedClient:
         except requests.exceptions.RequestException as httperror:
             print("ISE MNT API Call Failed")
             print(httperror)
+            print(traceback.format_exc())
         except Exception as error:
             print(error)
+            print(traceback.format_exc())

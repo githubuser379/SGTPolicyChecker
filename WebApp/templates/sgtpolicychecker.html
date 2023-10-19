@@ -1,0 +1,45 @@
+<DOCTYPE html>
+    <html>
+        <head>
+            <title> Segmentation Policy Checker </title>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </head>
+        <body>
+            <h2>Segmentation Policy Checker</h2>
+           
+            <select name="dropdown_choice" id="dropdown">
+                <option value="ipaddress" selected>IP Address</option>
+                <option value="hostname">Hostname</option>
+            </select>
+           
+            <form action="/sgtpolicychecker/process" method="post">
+                <div id="ipaddress_fields" class="conditional_fields">
+                    <label for="ipaddress1">IP Address 1</label>
+                    <input type="text" name="ipaddress1" id="ipaddress1">
+                        <br>
+                    <label for="ipaddress2">IP Address 2</label>
+                    <input type="text" name="ipaddress2" id="ipaddress2">
+                </div>
+                <div id="hostname_fields" class="conditional_fields">
+                    <label for="hostname1">Hostname 1</label>
+                    <input type="text" name="hostname1" id="hostname1">
+                        <br>
+                    <label for="hostname2">Hostname 2</label>
+                    <input type="text" name="hostname2" id="hostname2">
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+
+            <script>
+                $(document).ready(function() { 
+                    $ ('#dropdown').change(function() { 
+                        $('.conditional_fields').hide();
+
+                        var selectedOption = $(this).val();
+                        $('#' + selectedOption + '_fields').show();
+                    }).change();
+                });
+            </script>
+        </body>
+    </html>
+</DOCTYPE>

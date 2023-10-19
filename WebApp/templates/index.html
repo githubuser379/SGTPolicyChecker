@@ -1,0 +1,40 @@
+<DOCTYPE html>
+    <html>
+        <head>
+            <title> SGT Policy Checker </title>
+        </head>
+        <body>
+            <h1> SGT Policy Check Web App </h1>
+
+            <h2> The SGTPolicyCheck Web App allows a user to do a live check on two authenticated hosts on an enterprise network 
+                to determine whether a Cisco TrustSec policy is restricting access between them.
+            </h2>
+            
+            <h3> 
+                The following logic is executed when the WebApp is run
+            
+            </h3>  
+                - Parses user provided information about two hosts of interest
+                <br> 
+                - Resolves hostnames (if hostnames, not IP addresses, provided by user)
+                <br>
+                - Queries the ISE MNT API for session information using the IP Address of each host
+                <br>    
+                - Parses the ISE MNT API session information to determine the tag value of each host
+                <br>    
+                - Queries the ISE ERS API to idenitfy the TrustSec Matrix Cell which contains the policy for the idenitified tags
+                <br>    
+                - Queries the ISE ERS API to idenitfy the TrustSec Matrix SGACLS contained in the identified cells
+                <br>    
+                - Queries the ISE ERS API to idenitfy the specific content of SGACLS contained in the identified cells
+                <br>    
+                - Summarizes the segmentation policy between the two hosts of interest 
+            </h3>
+
+            <h3> 
+                <a href="/sgtpolicychecker"> SGT Policy Checker Form </a>
+            </h3>
+
+        </body>
+    </html>
+</DOCTYPE>
