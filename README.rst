@@ -42,8 +42,8 @@ Install python 3.9.6 and add python to the system path:
 
     Just select "Add Python to environment variables" during Wizard-based installation of Python
 
-Manually download SGTPolicyCheck package from https://github.com/githubuser379/SGTPolicyChecker and install it on your 
-computer wherever you'd like.
+Manually download SGTPolicyCheck package from https://github.com/githubuser379/SGTPolicyChecker and place the folder 
+wherever you'd like on your computer.
 
 If git is installed on your computer, you can alternatively clone the repo from 
 git@github.com:githubuser379/SGTPolicyChecker.git:
@@ -328,7 +328,7 @@ The --apiusername and --apipassword arguments are the credentials that will be p
 Authentication. For the package to work, the credentials provided must have ERS Admin and MNT Admin permissions in the 
 relevant ISE environment
 
-If the credentials are invalid, the ISE server will respond with a HTTP 401 error and the program will throw and exception
+If the credentials are invalid, the ISE server will respond with a HTTP 401 error and the program will throw an exception
 and exit once the HTTP response is received back from ISE.
 
 
@@ -390,6 +390,7 @@ Cell ID: None
 
 Is Empty Cell? True
  
+
 ~~ Host2 -> Host1 Cell info ~~
 
 ADM -> ADM_WKS_MAN
