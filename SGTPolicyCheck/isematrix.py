@@ -95,7 +95,8 @@ class TrustSecMatrixCell(TrustSecMatrix):
                 ISEAPICall = requests.get(getSGACLdetailsurl,auth=(APIUsername,APIPassword),headers=headers,verify=False)
                 ISEAPICall.raise_for_status()
                 APIResponseData= ISEAPICall.json()
-                self.SGACLcontent.append(APIResponseData['Sgacl']['aclcontent'])
+                SGACLContentList = APIResponseData['Sgacl']['aclcontent'].split("\n")
+                self.SGACLcontent = SGACLContentList
                 self.SGACLnames.append(APIResponseData['Sgacl']['name'])
                 if i > 1:
                     time.sleep(1)
