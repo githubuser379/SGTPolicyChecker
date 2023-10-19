@@ -16,10 +16,7 @@ def load_sgtpolicycheck_page():
 
 @app.route('/sgtpolicychecker/processor')
 def run_sgtpolicychecker():
-    
     hostidentifiertype = request.form['dropdown_choice']
-    if hostidentifiertype == "ipaddress":
-    if hostidentifiertype == "hostname:":
     ipaddr1 = request.form['ipaddress1']
     ipaddr2 = request.form['ipaddress2']
     hostname1 = request.form['hostname1']
