@@ -6,40 +6,27 @@
         </head>
         <body>
             <h2>Segmentation Policy Checker</h2>
-           
-            <select name="dropdown_choice" id="dropdown">
-                <option value="ipaddress" selected>IP Address</option>
-                <option value="hostname">Hostname</option>
-            </select>
-           
             <form action="/sgtpolicychecker/process" method="post">
-                <div id="ipaddress_fields" class="conditional_fields">
-                    <label for="ipaddress1">IP Address 1</label>
-                    <input type="text" name="ipaddress1" id="ipaddress1">
-                        <br>
-                    <label for="ipaddress2">IP Address 2</label>
-                    <input type="text" name="ipaddress2" id="ipaddress2">
+                <div id="host1">
+                    <label for="host1_identifiertype">Type</label>
+                    <select name="host1_identifiertype" id="dropdown1">
+                        <option value="ipaddress" selected>IP Address</option>
+                        <option value="hostname">Hostname</option>
+                    </select>
+                    <label for="host1">Host 1</label>
+                    <input type="text" name="host1" id="host1">
                 </div>
-                <div id="hostname_fields" class="conditional_fields">
-                    <label for="hostname1">Hostname 1</label>
-                    <input type="text" name="hostname1" id="hostname1">
-                        <br>
-                    <label for="hostname2">Hostname 2</label>
-                    <input type="text" name="hostname2" id="hostname2">
+                <div id="host2">
+                    <label for="host2_identifiertype">Type</label>
+                    <select name="host2_identifiertype" id="dropdown2">
+                        <option value="ipaddress" selected>IP Address</option>
+                        <option value="hostname">Hostname</option>
+                    </select>
+                    <label for="host2">Host 2</label>
+                    <input type="text" name="host2" id="host2">
                 </div>
                 <input type="submit" value="Submit">
             </form>
-
-            <script>
-                $(document).ready(function() { 
-                    $ ('#dropdown').change(function() { 
-                        $('.conditional_fields').hide();
-
-                        var selectedOption = $(this).val();
-                        $('#' + selectedOption + '_fields').show();
-                    }).change();
-                });
-            </script>
         </body>
     </html>
 </DOCTYPE>
