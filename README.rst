@@ -104,13 +104,13 @@ You can also try re-installing python 3.9.6.
 
 A user or front-end application makes use of the package by issuing some variation of the following command:
 
-python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --host1 [hostname] --host2 [hostname] --apiusername [user] --apipassword [pass]
+python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --hostname1 [hostname] --hostname2 [hostname] --apiusername [user] --apipassword [pass]
 
-python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddr1 [ipaddr] --ipaddr2 [ipaddr] --apiusername [user] --apipassword [pass]
+python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddress1 [ipaddress] --ipaddress2 [ipaddress] --apiusername [user] --apipassword [pass]
 
-python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --host1 [hostname] --ipaddr1 [ipaddr] --apiusername [user] --apipassword [pass]
+python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --hostname1 [hostname] --ipaddress1 [ipaddr] --apiusername [user] --apipassword [pass]
 
-python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddr1 [ipaddr] --host1 [hostname] --apiusername [user] --apipassword [pass]
+python3 /[install_path]/SGTPolicyCheck --environment ['Dev'|'Test'|'Prod'] --ipaddress1 [ipaddr] --host1 [hostname] --apiusername [user] --apipassword [pass]
 
 ~~~~~~~~~~~~~~~~~~~
 ~~~ Host Inputs ~~~

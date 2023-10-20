@@ -6,7 +6,7 @@
         </head>
         <body>
             <h2>Segmentation Policy Checker</h2>
-            <form action="/sgtpolicychecker/process" method="post">
+            <form action="/sgtpolicychecker/results" method="post">
                 <div id="host1">
                     <label for="host1_identifiertype">Type</label>
                     <select name="host1_identifiertype" id="dropdown1">
@@ -27,6 +27,12 @@
                 </div>
                 <input type="submit" value="Submit">
             </form>
+
+            {% if result %}
+            <h3>Command Results:</h3>
+            <pre>{{ result }} </pre>
+            {% endif %}
+
         </body>
     </html>
 </DOCTYPE>
