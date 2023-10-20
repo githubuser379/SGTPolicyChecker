@@ -14,10 +14,10 @@ def main():
         parser.add_argument("-e","--environment",help="Dev,Test, or Prod Environment",required=True)
         parser.add_argument("-u","--apiusername", help="Username for ISE API (via environment variable - $USERNAME)", required=False)
         parser.add_argument("-p","--apipassword", help="Password for ISE API (via environment variable - $PASSWORD)", required=False)
-        parser.add_argument("-h1","--host1", help="Hostname of First Host", required=False)
-        parser.add_argument("-h2","--host2", help="Hostname of Second Host", required=False)
-        parser.add_argument("-i1","--ipaddr1",help="IP Address of First Host",required=False)
-        parser.add_argument("-i2","--ipaddr2",help="IP Address of Second Host",required=False)
+        parser.add_argument("-h1","--hostname1", help="Hostname of First Host", required=False)
+        parser.add_argument("-h2","--hostname2", help="Hostname of Second Host", required=False)
+        parser.add_argument("-i1","--ipaddress1",help="IP Address of First Host",required=False)
+        parser.add_argument("-i2","--ipaddress2",help="IP Address of Second Host",required=False)
         args = parser.parse_args()
     except parser.error:
         error = sys.exc_info()[0]
@@ -41,10 +41,10 @@ def main():
     Host2 = authenticatedhost.AuthenticatedClient(iseenvironment)
 
     ### Assign attributes to host objects
-    Host1.hostname = args.host1
-    Host2.hostname = args.host2
-    Host1.ipaddress = args.ipaddr1
-    Host2.ipaddress = args.ipaddr2
+    Host1.hostname = args.hostname1
+    Host2.hostname = args.hostname2
+    Host1.ipaddress = args.ipaddress1
+    Host2.ipaddress = args.ipaddress2
 
     ### Set environment configurations by referencing config.py file
     if iseenvironment == "Dev":
