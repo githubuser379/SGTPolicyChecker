@@ -4,7 +4,7 @@ from flask import Flask,render_template,request,redirect,url_for
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-app= Flask(__name__)
+app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
