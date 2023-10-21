@@ -1,10 +1,20 @@
-<DOCTYPE html>
-    <html>
-        <head>
-            <title> Segmentation Policy Checker </title>
-        </head>
+{% extends "base.html" %}
+
+{% block title%} 
+    SGT Policy Checker 
+{% endblock %}
+
+{% block page_title %} 
+    Run SGT Policy Checker 
+{% endblock%}
+
+{% block page_description %}
+        Please provide identifiers for two hosts connected to the enterprise network
+{% endblock %}
+
+{% block page_body %}
         <body>
-            <h2>Segmentation Policy Checker</h2>
+            <br>
             <form action="/sgtpolicychecker/results" method="post">
                 <div id="host1">
                     <label for="host1_identifiertype">Type</label>
@@ -26,12 +36,11 @@
                 </div>
                 <input type="submit" value="Submit">
             </form>
-
+            <br>
             {% if result %}
-            <h3>Command Results:</h3>
+            <h3> Policy Checker Results:</h3>
             <pre>{{ result }} </pre>
             {% endif %}
-
         </body>
-    </html>
-</DOCTYPE>
+
+{% endblock %}

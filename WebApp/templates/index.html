@@ -1,40 +1,61 @@
-<DOCTYPE html>
-    <html>
-        <head>
-            <title> SGT Policy Checker </title>
-        </head>
-        <body>
-            <h1> SGT Policy Check Web App </h1>
+{% extends "base.html" %}
 
-            <h2> The SGTPolicyCheck Web App allows a user to do a live check on two authenticated hosts on an enterprise network 
-                to determine whether a Cisco TrustSec policy is restricting access between them.
-            </h2>
-            
-            <h3> 
-                The following logic is executed when the WebApp is run
-            
-            </h3>  
-                - Parses user provided information about two hosts of interest
-                <br> 
-                - Resolves hostnames (if hostnames, not IP addresses, provided by user)
-                <br>
-                - Queries the ISE MNT API for session information using the IP Address of each host
-                <br>    
-                - Parses the ISE MNT API session information to determine the tag value of each host
-                <br>    
-                - Queries the ISE ERS API to idenitfy the TrustSec Matrix Cell which contains the policy for the idenitified tags
-                <br>    
-                - Queries the ISE ERS API to idenitfy the TrustSec Matrix SGACLS contained in the identified cells
-                <br>    
-                - Queries the ISE ERS API to idenitfy the specific content of SGACLS contained in the identified cells
-                <br>    
-                - Summarizes the segmentation policy between the two hosts of interest 
-            </h3>
+{% block title%} 
+    SGT Policy Checker 
+{% endblock %}
 
-            <h3> 
-                <a href="/sgtpolicychecker"> SGT Policy Checker </a>
-            </h3>
+{% block page_title %} 
+    SGT Policy Checker 
+{% endblock%}
 
-        </body>
-    </html>
-</DOCTYPE>
+{% block page_description %}
+        The SGT Policy Checker Web App determines the network segmentation policy between two host connected to the enterprise network
+{% endblock %}
+
+{% block page_body %}
+    <div>
+        <br>
+        <h2> 
+            Example Output:
+        </h2>
+
+        <pre> 
+            The following segmentation policy is in place for Host1 -> Host2:
+            Hostname1: R123456.mayo.edu -> Hostname2: R654321.mayo.edu
+            Host1 IP: 10.249.37.37 -> Host2 IP: 10.249.21.46
+            ADM_NET_INFR -> ADM_NET_INFR
+            Host1 NAC Authz Policy: Mayo_Allow_Reauth
+            Host2 NAC Authz Policy: Mayo_Allow_Reauth
+            Host1 Tag: ADM_NET_INFR
+            Host2 Tag: ADM_NET_INFR
+            SGACL name: TEST_9300
+            SGACL content:
+                1  |  deny tcp dst eq 22 log
+                2  |  deny tcp src eq 22 log
+                3  |  deny tcp dst eq 23
+                4  |  deny tcp src eq 23
+                5  |  deny icmp log
+                6  |  permit ip
+
+            The following segmentation policy is in place for Host2 -> Host1:
+
+            Hostname2: R654321.mayo.edu -> Hostname1: R123456.mayo.edu
+            10.249.21.46 -> 10.249.37.37
+            ADM_NET_INFR -> ADM_NET_INFR
+            Host2 NAC Authz Policy: Mayo_Allow_Reauth
+            Host1 NAC Authz Policy: Mayo_Allow_Reauth
+            Host2 Tag: ADM_NET_INFR
+            Host1 Tag: ADM_NET_INFR
+            SGACL name: TEST_9300
+            SGACL content: 
+
+                1  |  deny tcp dst eq 22 log
+                2  |  deny tcp src eq 22 log
+                3  |  deny tcp dst eq 23
+                4  |  deny tcp src eq 23
+                5  |  deny icmp log
+                6  |  permit ip
+        </pre>
+    </div>
+
+{% endblock %}
