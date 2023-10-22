@@ -13,34 +13,49 @@
 {% endblock %}
 
 {% block page_body %}
-        <body>
-            <br>
-            <form action="/sgtpolicychecker/results" method="post">
-                <div id="host1">
-                    <label for="host1_identifiertype">Type</label>
-                    <select name="host1_identifiertype" id="dropdown1">
-                        <option value="ipaddress" selected>IP Address</option>
-                        <option value="hostname">Hostname</option>
-                    </select>
-                    <label for="host1">Host 1</label>
-                    <input type="text" name="host1" id="host1">
-                </div>
-                <div id="host2">
-                    <label for="host2_identifiertype">Type</label>
-                    <select name="host2_identifiertype" id="dropdown2">
-                        <option value="ipaddress" selected>IP Address</option>
-                        <option value="hostname">Hostname</option>
-                    </select>
-                    <label for="host2">Host 2</label>
-                    <input type="text" name="host2" id="host2">
-                </div>
-                <input type="submit" value="Submit">
-            </form>
-            <br>
-            {% if result %}
-            <h3> Policy Checker Results:</h3>
-            <pre>{{ result }} </pre>
-            {% endif %}
-        </body>
-
+        <br>
+            <div class="px-5">
+                <form action="/sgtpolicychecker/results" method="post">
+                    <div class="form-group" id="iseenvironment">
+                        <label for="iseenvironment">ISE Environment</label>
+                        <select name="iseenvironment" id="dropdown1" class="form-control">
+                            <option value="dev" selected>Dev</option>
+                            <option value="test">Test</option>
+                            <option value disabled="prod">Prod</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group" id="host1">
+                        <label for="host1_identifiertype">Host 1 Identifier Type</label>
+                        <select name="host1_identifiertype" id="dropdown1" class="form-control">
+                            <option value="ipaddress" selected>IP Address</option>
+                            <option value="hostname">Hostname</option>
+                        </select>
+                        <label for="host1">Host 1 Identifier Value</label>
+                        <input type="text" name="host1" id="host1" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group" id="host2">
+                        <label for="host2_identifiertype">Host 2 Identifier Type</label>
+                        <select name="host2_identifiertype" id="dropdown2" class="form-control">
+                            <option value="ipaddress" selected>IP Address</option>
+                            <option value="hostname">Hostname</option>
+                        </select>
+                        <label for="host2">Host 2 Identifier Value</label>
+                        <input type="text" name="host2" id="host2" class="form-control">
+                    </div>
+                    <br>
+                    <div>
+                        <button type="submit" class="btn btn-primary" >Submit</button>
+                    </div>
+                </form>
+            </div>
+        <br>
+        <br>
+            <div class="px-5">
+                {% if result %}
+                <h3> Policy Checker Results:</h3>
+                <pre>{{ result }} </pre>
+                {% endif %}
+            </div>
 {% endblock %}

@@ -9,27 +9,26 @@
 {% endblock%}
 
 {% block page_description %}
-        The SGT Policy Checker Web App determines the network segmentation policy between two host connected to the enterprise network
+        The SGT Policy Checker Web App determines the network segmentation policy between two authenticated hosts connected to the Mayo Enterprise Network
 {% endblock %}
 
 {% block page_body %}
-    <div>
+    <div class="px-5">
         <br>
         <h2> 
             Example Output:
         </h2>
 
         <pre> 
-            The following segmentation policy is in place for Host1 -> Host2:
+            The following segmentation policy is in place for traffic from Host1 -> Host2:
             Hostname1: R123456.mayo.edu -> Hostname2: R654321.mayo.edu
             Host1 IP: 10.249.37.37 -> Host2 IP: 10.249.21.46
-            ADM_NET_INFR -> ADM_NET_INFR
+            Host1 Tag: ADM_NET_INFR -> Host2 Tag: ADM_NET_INFR
             Host1 NAC Authz Policy: Mayo_Allow_Reauth
             Host2 NAC Authz Policy: Mayo_Allow_Reauth
-            Host1 Tag: ADM_NET_INFR
-            Host2 Tag: ADM_NET_INFR
             SGACL name: TEST_9300
             SGACL content:
+
                 1  |  deny tcp dst eq 22 log
                 2  |  deny tcp src eq 22 log
                 3  |  deny tcp dst eq 23
@@ -37,18 +36,15 @@
                 5  |  deny icmp log
                 6  |  permit ip
 
-            The following segmentation policy is in place for Host2 -> Host1:
-
+            The following segmentation policy is in place for traffic from Host2 -> Host1:
             Hostname2: R654321.mayo.edu -> Hostname1: R123456.mayo.edu
-            10.249.21.46 -> 10.249.37.37
-            ADM_NET_INFR -> ADM_NET_INFR
+            Host2 IP: 10.249.21.46 -> Host1 IP: 10.249.37.37
+            Host2 Tag: ADM_NET_INFR -> Host1 Tag: ADM_NET_INFR
             Host2 NAC Authz Policy: Mayo_Allow_Reauth
             Host1 NAC Authz Policy: Mayo_Allow_Reauth
-            Host2 Tag: ADM_NET_INFR
-            Host1 Tag: ADM_NET_INFR
             SGACL name: TEST_9300
             SGACL content: 
-
+            
                 1  |  deny tcp dst eq 22 log
                 2  |  deny tcp src eq 22 log
                 3  |  deny tcp dst eq 23

@@ -68,9 +68,15 @@ def main():
             Host1.ipaddress = socket.gethostbyname(Host1.hostname)
             print("Host1 Hostname: " + Host1.hostname)
             print("Host1 IP: " + Host1.ipaddress)
+        else:
+            print("No hostname provided for Host 1")
+            print("Host1 IP: " + Host1.ipaddress)
         if Host2.ipaddress == None: 
             Host2.ipaddress = socket.gethostbyname(Host2.hostname)
             print("Host2 Hostname: " + Host2.hostname)
+            print("Host2 IP: " + Host2.ipaddress)
+        else:
+            print("No hostname provided for Host 2")
             print("Host2 IP: " + Host2.ipaddress)
     except Exception as error:
         print("Could not resolve hostnames")
@@ -83,9 +89,9 @@ def main():
         print("\n~~ Retrieving authentication session information ~~") 
         ipaddress1 = Host1.ipaddress
         Host1.getclientauthsession(ipaddress1,apiusername,apipassword)
-        print("Host1 Mac Address: " + Host1.macaddress)
-        print("Host1 AuthzProfile: " + Host1.authzprofile)
-        print("Host1 Tag: " + Host1.securitygrouptag)
+        print("Host1 Mac Address: " + str(Host1.macaddress))
+        print("Host1 AuthzProfile: " + str(Host1.authzprofile))
+        print("Host1 Tag: " + str(Host1.securitygrouptag))
     except Exception as error:
         print("Could not retrieve Host1 tag from ISE MNT node")
         print(error)
@@ -95,9 +101,9 @@ def main():
     try:
         ipaddress2 = Host2.ipaddress
         Host2.getclientauthsession(ipaddress2,apiusername,apipassword)
-        print("Host2 Mac Address: " + Host2.macaddress)
-        print("Host2 AuthzProfile: " + Host2.authzprofile)
-        print("Host2 Tag: " + Host2.securitygrouptag)
+        print("Host2 Mac Address: " + str(Host2.macaddress))
+        print("Host2 AuthzProfile: " + str(Host2.authzprofile))
+        print("Host2 Tag: " + str(Host2.securitygrouptag))
     except Exception as error:
         print("Could not retrieve Host2 tag from ISE MNT node")
         print(error)
@@ -199,27 +205,22 @@ def main():
     print("~~~~~~~~~~~~~~~~~~ Segmentation Policy Results ~~~~~~~~~~~~~~~~~~ \n")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n")
     
-    print("The following segmentation policy is in place for Host1 -> Host2:\n")
+    print("The following segmentation policy is in place for traffic from Host1 -> Host2:\n")
     if SrcTagtoDstTagCell.SGACLnames == None:
         print("Hostname1: " + str(Host1.hostname) + " -> " + "Hostname2: " + str(Host2.hostname))
-        print(str(Host1.ipaddress) + " -> " + str(Host2.ipaddress))
-        print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
+        print("Host1 IP: " + str(Host1.ipaddress) + " -> " + "Host2 IP: " + str(Host2.ipaddress))
+        print("Host1 Tag: " + Host1.securitygrouptag + " -> " + "Host2 Tag: " + Host2.securitygrouptag)
         print("Host1 NAC Authz Policy: " + Host1.authzprofile)
         print("Host2 NAC Authz Policy: " + Host2.authzprofile)
-        print("Host1 Tag: " + Host1.securitygrouptag)
-        print("Host2 Tag: " + Host2.securitygrouptag)
         print("Is Empty Cell? " + str(SrcTagtoDstTagCell.emptycell) + "\n")
         print("     " + str(SrcTagtoDstTagCell.matrixdefaultrule) + " (Default Policy)\n")
     else:
         print("Hostname1: " + str(Host1.hostname) + " -> " + "Hostname2: " + str(Host2.hostname))
-        print(str(Host1.ipaddress) + " -> " + str(Host2.ipaddress))
-        print(Host1.securitygrouptag + " -> " + Host2.securitygrouptag)
+        print("Host1 IP: " + str(Host1.ipaddress) + " -> " + "Host2 IP: " + str(Host2.ipaddress))
+        print("Host1 Tag: "  + str(Host1.securitygrouptag) + " -> " + "Host2 Tag: " + str(Host2.securitygrouptag))
         for SGACLname in SrcTagtoDstTagCell.SGACLnames:
             print("Host1 NAC Authz Policy: " + Host1.authzprofile)
             print("Host2 NAC Authz Policy: " + Host2.authzprofile)
-            print("Host1 Tag: " + Host1.securitygrouptag)
-            print("Host2 Tag: " + Host2.securitygrouptag)
-            
             print("SGACL name: " + str(SGACLname))
             print("SGACL content: \n")
             ACENumber = 1
@@ -228,26 +229,22 @@ def main():
                 ACENumber += 1
             print("\n")
     
-    print("The following segmentation policy is in place for Host2 -> Host1:\n")
+    print("The following segmentation policy is in place for traffic from Host2 -> Host1:\n")
     if DstTagtoSrcTagCell.SGACLnames == None:
         print("Hostname2: " + str(Host2.hostname) + " -> " + "Hostname1: " + str(Host1.hostname))
-        print(str(Host2.ipaddress) + " -> " + str(Host1.ipaddress))
-        print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
+        print("Host2 IP: " + str(Host2.ipaddress) + " -> " + "Host1 IP: " + str(Host1.ipaddress))
+        print("Host2 Tag: " + Host2.securitygrouptag + " -> " + "Host1 Tag: " + Host1.securitygrouptag)
         print("Host2 NAC Authz Policy: " + Host2.authzprofile)
         print("Host1 NAC Authz Policy: " + Host1.authzprofile)
-        print("Host2 Tag: " + Host2.securitygrouptag)
-        print("Host1 Tag: " + Host1.securitygrouptag)
         print("Is Empty Cell? " + str(DstTagtoSrcTagCell.emptycell) + "\n") 
         print("     " + str(DstTagtoSrcTagCell.matrixdefaultrule) + " (Default Policy)\n")
     else:
         print("Hostname2: " + str(Host2.hostname) + " -> " + "Hostname1: " + str(Host1.hostname))
-        print(str(Host2.ipaddress) + " -> " + str(Host1.ipaddress))
-        print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
+        print("Host2 IP: " + str(Host2.ipaddress) + " -> " + "Host1 IP: " + str(Host1.ipaddress))
+        print("Host2 Tag: " + Host2.securitygrouptag + " -> " + "Host1 Tag: " + Host1.securitygrouptag)
         for SGACLname in DstTagtoSrcTagCell.SGACLnames:
             print("Host2 NAC Authz Policy: " + Host2.authzprofile)
             print("Host1 NAC Authz Policy: " + Host1.authzprofile)
-            print("Host2 Tag: " + Host2.securitygrouptag)
-            print("Host1 Tag: " + Host1.securitygrouptag)
             print("SGACL name: " +str(SGACLname))
             print("SGACL content: \n")
             ACENumber = 1
