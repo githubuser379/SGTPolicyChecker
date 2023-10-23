@@ -16,7 +16,6 @@ def load_loginpage():
         return render_template('login.html')
     elif request.method == 'POST':
         auth_result = ""
-        
         return render_template('login.html',result = auth_result)
 
 @app.route('/sgtpolicychecker', methods=['GET'])
@@ -29,10 +28,12 @@ def run_sgtpolicychecker():
     if request.method == 'POST':
         host1identifiertype = request.form['host1_identifiertype']
         host2identifiertype = request.form['host2_identifiertype']
+        iseenvironment = request.form['iseenvironment']
         host1argtype = ""
         host1value = ""
         host2argtype = ""
         host2value = ""
+
         if host1identifiertype == "hostname":
             hostname1 = request.form['host1']
             host1argtype = "--hostname1"
@@ -51,7 +52,16 @@ def run_sgtpolicychecker():
             host2value = str(ipaddress2)
         
         sgtpolicycheck_path = os.path.join(os.path.dirname(os.getcwd()),'SGTPolicyCheck')
-        sgtpolicycheck_command = subprocess.run(["python",sgtpolicycheck_path,"--environment","Dev",host1argtype,host1value,host2argtype,host2value],capture_output=True, text=True)
+        if iseenvironment == "dev":
+            sgtpolicycheck_command = subprocess.run(["python",sgtpolicycheck_path,"--environment","Dev",host1argtype,host1value,host2argtype,host2value],capture_output=True, text=True)
+        elif iseenvironment == "test":
+            sgtpolicycheck_command = subprocess.run(["python",sgtpolicycheck_path,"--environment","Test",host1argtype,host1value,host2argtype,host2value],capture_output=True, text=True)
+        elif iseenvironment == "prod":
+            apiusername = os.environ.get('SGTPOLICYCHECK_USERNAME')
+            print(apiusername)
+            apipassword = os.environ.get('SGTPOLICYCHECK_PASSWORD')
+            print(apipassword)
+            sgtpolicycheck_command = subprocess.run(["python",sgtpolicycheck_path,"--environment","Prod",host1argtype,host1value,host2argtype,host2value,"--apiusername",apiusername,"--apipassword",apipassword],capture_output=True, text=True)
 
         if sgtpolicycheck_command.returncode == 0:
             output = sgtpolicycheck_command.stdout
