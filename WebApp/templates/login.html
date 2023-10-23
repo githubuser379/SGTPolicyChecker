@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{extends "base.html"}
+
+{% block title%} 
+    SGT Policy Checker 
+{% endblock %}
+
+{% block page_title %} 
+    SGT Policy Checker Login Page
+{% endblock%}
+
+{% block page_description %}
+    Please provide your login credentials
+{% endblock %}
+
+{% block page_body %}
+        <br>
+            <div class="px-5">
+                <form action="/login'" method="post">
+                    <div class="form-group" id="username">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group" id="password">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <br>
+                    <div>
+                        <button type="submit" class="btn btn-primary" >Submit</button>
+                    </div>
+                </form>
+            </div>
+{% endblock %}

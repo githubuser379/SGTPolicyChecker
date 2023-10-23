@@ -10,7 +10,16 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/sgtpolicychecker', methods=['GET','POST'])
+@app.route('/login', methods=['GET'])
+def load_loginpage():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        auth_result = ""
+        
+        return render_template('login.html',result = auth_result)
+
+@app.route('/sgtpolicychecker', methods=['GET'])
 def load_sgtpolicycheck_page():
     return render_template('sgtpolicychecker.html')
 
