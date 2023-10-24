@@ -3,6 +3,7 @@ import requests
 import config
 import time
 import urllib3
+import sys
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -64,9 +65,11 @@ class TrustSecMatrixCell(TrustSecMatrix):
             print("ISE ERS API Call Failed")
             print(httperror)
             print(traceback.format_exc())
+            sys.exit()
         except Exception as error:
             print(error)
             print(traceback.format_exc())
+            sys.exit()
 
     def getCellSGACLIDs(self,APIUsername,APIPassword,cellid):
         try:
@@ -82,9 +85,11 @@ class TrustSecMatrixCell(TrustSecMatrix):
             print("ISE ERS API Call Failed")
             print(httperror)
             print(traceback.format_exc())
+            sys.exit()
         except Exception as error:
             print(error)
             print(traceback.format_exc())
+            sys.exit()
     
     def getSGACLbyID(self,APIUsername,APIPassword,SGACLIDs):
         try:
@@ -105,8 +110,10 @@ class TrustSecMatrixCell(TrustSecMatrix):
             print("ISE ERS API Call Failed")
             print(httperror)
             print(traceback.format_exc())
+            sys.exit()
         except Exception as error:
             print(error)
             print(traceback.format_exc())
+            sys.exit()
     
     
