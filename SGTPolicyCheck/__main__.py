@@ -23,6 +23,7 @@ def main():
         error = sys.exc_info()[0]
         print(traceback.format_exc())
         print(error)
+        sys.exit()
     
     ### Define global variables
     iseenvironment = "Dev,Test, or Prod placeholder variable"
@@ -130,6 +131,7 @@ def main():
         print("Could not retrieve cellID from ISE ERS API node for SRC->DST cell ")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
     try:
         DstTagtoSrcTagCell = isematrixcellobject2.getMatrixCellInfo(Host2.securitygrouptag,Host1.securitygrouptag,apiusername,apipassword)
         print("\n~~ Host2 -> Host1 Cell info ~~")
@@ -145,6 +147,7 @@ def main():
         print("Could not retrieve cellID from ISE ERS API node for DST->SRC cell")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
 
     ### Get SGACL IDs for SGACLs configured in identified TrustSec Matrix Cells
     try:
@@ -163,6 +166,7 @@ def main():
         print("Could not retrieve SRC->DST SGACL IDs from ISE ERS API") 
         print(error)
         print(traceback.format_exc())
+        sys.exit()
     try:
         if DstTagtoSrcTagCell.totalcells == 0:
             print(Host2.securitygrouptag + " -> " + Host1.securitygrouptag)
@@ -177,6 +181,7 @@ def main():
         print("Could not retrieve DST->SRC SGACL IDs from ISE ERS API")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
     
     ### Get SGACL Details by SGACL ID
     try:
@@ -188,6 +193,7 @@ def main():
         print("Could not retrieve SRC->DST SGACL content details from ISE ERS API")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
 
     try:
         if DstTagtoSrcTagCell.SGACLIDs == None:
@@ -198,6 +204,7 @@ def main():
         print("Could not retrieve DST->SRC SGACL content details from ISE ERS API")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
 
 
     ### Summarize the SGT Policy between hosts
@@ -233,6 +240,7 @@ def main():
         print("Could not determine policy for Host1 -> Host 2")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
 
     try:
         print("The following segmentation policy is in place for traffic from Host2 -> Host1:\n")
@@ -262,6 +270,7 @@ def main():
         print("Could not determine policy for Host2 -> Host 1")
         print(error)
         print(traceback.format_exc())
+        sys.exit()
 
 if __name__ == '__main__':
     main()
