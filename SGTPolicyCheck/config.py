@@ -44,8 +44,8 @@ class ProdEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Prod"
-        self.ERS_HOST = "Test in Lab First"
-        self.MNT_HOST = "Test in Lab First"
+        self.ERS_HOST = ""
+        self.MNT_HOST = ""
         self.ERS_PORT = "9060"
         self.MNT_PORT = "443"
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
