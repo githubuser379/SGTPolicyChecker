@@ -344,9 +344,4 @@ cd /[install_path]
 
 source venv/bin/activate
 
-python /src/SGTPolicyCheck -e Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~Script Execution Output Example~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+python /src/SGTPolicyCheck -e Prod -u $USERNAME -p $PASSWORD -h1 host1.example.com -h2 host2.example.com
