@@ -12,8 +12,8 @@ class DevEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Dev"
-        self.ERS_HOST = "[Dev_ISEServerHostname_ERS]"
-        self.MNT_HOST = "[Dev_ISEServerHostname_MNT]"
+        self.ERS_HOST = "Dev_ISEServerHostname_ERS"
+        self.MNT_HOST = "Dev_ISEServerHostname_MNT"
         self.ERS_PORT = "9060"
         self.MNT_PORT = "443"
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
@@ -28,8 +28,8 @@ class TestEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Test"
-        self.ERS_HOST = "[Test_ISEServerHostname_ERS]"
-        self.MNT_HOST = "[Test_ISEServerHostname_MNT]"
+        self.ERS_HOST = "Test_ISEServerHostname_ERS"
+        self.MNT_HOST = "Test_ISEServerHostname_MNT"
         self.ERS_PORT = "9060"
         self.MNT_PORT = "443"
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
@@ -44,8 +44,8 @@ class ProdEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Prod"
-        self.ERS_HOST = ""
-        self.MNT_HOST = ""
+        self.ERS_HOST = "Prod_ISEServerHostname_ERS"
+        self.MNT_HOST = "Prod_ISEServerHostname_MNT"
         self.ERS_PORT = "9060"
         self.MNT_PORT = "443"
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
