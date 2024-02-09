@@ -12,8 +12,8 @@ class DevEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Dev"
-        self.ERS_HOST = "rooc01lac01.mayo.edu"
-        self.MNT_HOST = "rooc01lac02.mayo.edu"
+        self.ERS_HOST = "[Dev_ISEServerHostname_ERS]"
+        self.MNT_HOST = "[Dev_ISEServerHostname_MNT]"
         self.ERS_PORT = "9060"
         self.MNT_PORT = "443"
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
@@ -22,14 +22,14 @@ class DevEnvironmentSettings(RuntimeSettings):
         self.DevPass = "DevPass"
         # Example cmd session:
         #   cd /src
-        #   python SGTPolicyCheck -e Dev -u DevUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
+        #   python SGTPolicyCheck -e Dev -u DevUser -p TestPass -h1 host1.example.com -h2 host2.example.com
     
 class TestEnvironmentSettings(RuntimeSettings):
     def __init__(self):
         super().__init__()
         self.ENV_NAME ="Test"
-        self.ERS_HOST = "rooc01lac04.mayo.edu"
-        self.MNT_HOST = "rooc01lac05.mayo.edu"
+        self.ERS_HOST = "[Test_ISEServerHostname_ERS]"
+        self.MNT_HOST = "[Test_ISEServerHostname_MNT]"
         self.ERS_PORT = "9060"
         self.MNT_PORT = "443"
         self.ERS_BASE_URL = "https://" + self.ERS_HOST + ":" + self.ERS_PORT + "/ers/config"
@@ -38,7 +38,7 @@ class TestEnvironmentSettings(RuntimeSettings):
         self.TestPass = "TestPass"
         # Example cmd session:
         #   cd /src
-        #   python SGTPolicyCheck -e Test -u TestUser -p TestPass -h1 R123456.mayo.edu -h2 R654321.mayo.edu
+        #   python SGTPolicyCheck -e Test -u TestUser -p TestPass -h1 host1.example.com -h2 host2.example.com
 
 class ProdEnvironmentSettings(RuntimeSettings):
     def __init__(self):
@@ -56,4 +56,4 @@ class ProdEnvironmentSettings(RuntimeSettings):
         #   export $USERNAME = "ProdUser"
         #   export $PASSWORD = "ProdPass"  
         #   cd /src
-        #   python SGTPolicyCheck -e Prod -u $USERNAME -p $PASSWORD -h1 R123456.mayo.edu -h2 R654321.mayo.edu
+        #   python SGTPolicyCheck -e Prod -u $USERNAME -p $PASSWORD -h1 host1.example.com -h2 host2.example.com
